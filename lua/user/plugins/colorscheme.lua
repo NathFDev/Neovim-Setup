@@ -12,6 +12,7 @@ return {
 				harpoon = true,
 				mason = true,
 				which_key = true,
+				noice = true,
 			},
 		})
 	end,
