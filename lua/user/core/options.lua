@@ -12,9 +12,6 @@ opt.cursorline = true
 opt.relativenumber = true
 opt.number = true
 
--- Column
-opt.colorcolumn = "100"
-
 -- isfname
 opt.isfname:append("@-@")
 
@@ -40,14 +37,14 @@ opt.signcolumn = "yes"
 opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
-opt.timeoutlen = 300
+opt.timeoutlen = 100
 opt.undofile = true
 
 -- Scroll
 opt.scrolloff = 10
 
 -- Update time
-opt.updatetime = 50
+opt.updatetime = 100
 
 -- Swap file
 opt.swapfile = false
