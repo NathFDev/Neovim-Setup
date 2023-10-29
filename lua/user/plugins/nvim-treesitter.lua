@@ -42,6 +42,16 @@ return {
 					"dockerfile",
 					"gitignore",
 					"query",
+					"sql",
+					"rust",
+					"go",
+					"gomod",
+					"gowork",
+					"gosum",
+					"astro",
+					"regex",
+					"python",
+					"scss",
 				},
 				-- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
 				context_commentstring = {

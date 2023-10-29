@@ -12,6 +12,12 @@ opt.cursorline = true
 opt.relativenumber = true
 opt.number = true
 
+-- Column
+opt.colorcolumn = "80"
+
+-- isfname
+opt.isfname:append("@-@")
+
 -- Tab
 opt.tabstop = 4
 opt.shiftwidth = 4
@@ -42,3 +48,6 @@ opt.scrolloff = 10
 
 -- Update time
 opt.updatetime = 100
+
+-- Swap file
+opt.swapfile = false

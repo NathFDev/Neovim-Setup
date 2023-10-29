@@ -8,6 +8,7 @@ return {
 	config = function()
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
+		local util = require("lspconfig/util")
 
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -15,7 +16,7 @@ return {
 		local keymap = vim.keymap -- for conciseness
 
 		local opts = { noremap = true, silent = true }
-		local on_attach = function(client, bufnr)
+		local on_attach = function(_, bufnr)
 			opts.buffer = bufnr
 
 			-- set keybinds
@@ -70,20 +71,63 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
+		local function organize_imports()
+			local params = {
+				command = "_typescript.organizeImports",
+				arguments = { vim.api.nvim_buf_get_name(0) },
+			}
+			vim.lsp.buf.execute_command(params)
+		end
+
 		-- configure html server
 		lspconfig["html"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 
-		-- configure typescript server with plugin
-		lspconfig["tsserver"].setup({
+		-- configure htmx server
+		lspconfig["htmx"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 
+		-- configure go server
+		lspconfig["gopls"].setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			cmd = { "gopls" },
+			filetypes = { "go", "gomod", "gowork", "gotmpl" },
+			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+			settings = {
+				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					analyses = {
+						unusedparams = true,
+					},
+				},
+			},
+		})
+
+		-- configure typescript server with plugin
+		lspconfig["tsserver"].setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			init_options = {
+				preferences = {
+					disableSuggestions = true,
+				},
+			},
+			commands = {
+				OrganizeImports = {
+					organize_imports,
+					description = "Organize Imports",
+				},
+			},
+		})
+
 		-- configure css server
-		lspconfig["cssls"].setup({
+		lspconfig["css-lsp"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
@@ -119,7 +163,7 @@ return {
 		})
 
 		-- configure emmet language server
-		lspconfig["emmet_ls"].setup({
+		lspconfig["emmet-language-server"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
@@ -132,7 +176,7 @@ return {
 		})
 
 		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
+		lspconfig["lua-language-server"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = { -- custom settings for lua

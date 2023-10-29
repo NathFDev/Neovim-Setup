@@ -17,7 +17,14 @@ return {
 				"prettierd", -- prettier formatter
 				"stylua", -- lua formatter
 				"black", -- python formatter
-				"pylint", -- python linter
+				"gofumpt", -- go formatter
+				"golines", -- go formatter
+				"goimports-reviser", -- go formatter
+				"gospel", -- go linter
+				"eslint_d", -- js linter
+				"luacheck", -- lua linter
+				"mypy", -- python linter
+				"ruffle", -- python formatter
 				"eslint_d", -- js linter
 			},
 		})
@@ -38,12 +45,17 @@ return {
 				--  to disable file types use
 				--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
 				formatting.prettierd.with({
-					extra_filetypes = { "svelte", "javascriptreact", "typescriptreact", "vue" },
+					extra_filetypes = { "svelte", "javascriptreact", "typescriptreact", "vue", "astro" },
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
-				formatting.isort,
 				formatting.black,
-				diagnostics.pylint,
+				formatting.goimports_reviser,
+				formatting.golines,
+				formatting.gofumpt,
+				diagnostics.luacheck,
+				diagnostics.gospel,
+				diagnostics.ruff,
+				diagnostics.mypy,
 				diagnostics.eslint_d.with({ -- js/ts linter
 					condition = function(utils)
 						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
